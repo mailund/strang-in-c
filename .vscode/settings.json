@@ -1,0 +1,14 @@
+{
+  "C_Cpp.default.includePath": [
+    "${workspaceFolder}/src"
+  ],
+  "C_Cpp.codeAnalysis.clangTidy.useBuildPath": true,
+  "C_Cpp.default.systemIncludePath": [
+    "${workspaceFolder}/src"
+  ],
+  "clangTidy.systemIncludePath": [
+    "${workspaceFolder}/src"
+  ],
+  "c-cpp-flylint.lizard.enable": false,
+  "C_Cpp.intelliSenseEngine": "disabled"
+}
