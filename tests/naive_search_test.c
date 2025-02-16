@@ -7,7 +7,7 @@
 static void search_empty_x(void) {
   const char *x = "";
   const char *p = "abc";
-  const char *result = naive_search(x, p);
+  const char *result = naive(x, p);
   if (result != NULL) {
     fprintf(stderr, "search_empty_x failed\n");
     exit(1);
@@ -17,7 +17,7 @@ static void search_empty_x(void) {
 static void search_empty_p(void) {
   const char *x = "abc";
   const char *p = "";
-  const char *result = naive_search(x, p);
+  const char *result = naive(x, p);
   if (result != x) {
     fprintf(stderr, "search_empty_p failed\n");
     exit(1);
@@ -29,7 +29,7 @@ static bool compare_with_exected(const char *x, const char *p, int *expected,
   const char *i = x;
   printf("Lort %s and %s\n", x, p);
   for (int hit = 0; hit < expected_hits; hit++) {
-    i = naive_search(i, p);
+    i = naive(i, p);
     printf("%s\n", i);
     if (expected[hit] != i - x) {
       fprintf(stderr, "Expected %d but got %ld\n", expected[hit], i - x);
@@ -37,7 +37,7 @@ static bool compare_with_exected(const char *x, const char *p, int *expected,
     }
     i++;
   }
-  i = naive_search(i + 1, p);
+  i = naive(i + 1, p);
   return i == NULL;
 }
 
@@ -81,7 +81,7 @@ static void search_when_p_is_longer_than_x(void) {
   const char *x = "abracadabra";
   const char *p = "abracadabra!";
 
-  const char *result = naive_search(x, p);
+  const char *result = naive(x, p);
   if (result != NULL) {
     fprintf(stderr, "search_when_p_is_longer_than_x failed\n");
     exit(1);
