@@ -5,9 +5,12 @@
 #include <string.h>
 
 static void search_empty_x(void) {
+  printf("search_empty_x\n");
   const char *x = "";
   const char *p = "abc";
-  const char *result = naive(x, p);
+  struct kmp_iter iter = kmp_iter_init(x, p);
+  const char *result = kmp_iter_next(&iter);
+  kmp_iter_free(&iter);
   if (result != NULL) {
     fprintf(stderr, "search_empty_x failed\n");
     exit(1);
@@ -15,9 +18,12 @@ static void search_empty_x(void) {
 }
 
 static void search_empty_p(void) {
+  printf("search_empty_p\n");
   const char *x = "abc";
   const char *p = "";
-  const char *result = naive(x, p);
+  struct kmp_iter iter = kmp_iter_init(x, p);
+  const char *result = kmp_iter_next(&iter);
+  kmp_iter_free(&iter);
   if (result != NULL) {
     fprintf(stderr, "search_empty_p failed\n");
     exit(1);
@@ -26,9 +32,10 @@ static void search_empty_p(void) {
 
 static bool compare_with_exected(const char *x, const char *p, int *expected,
                                  int expected_hits) {
+  struct kmp_iter iter = kmp_iter_init(x, p);
   const char *i = x;
   for (int hit = 0; hit < expected_hits; hit++) {
-    i = naive(i, p);
+    i = kmp_iter_next(&iter);
     if (expected[hit] != i - x) {
       fprintf(stderr, "Expected %d but got %ld\n", expected[hit], i - x);
       return false;
@@ -36,6 +43,7 @@ static bool compare_with_exected(const char *x, const char *p, int *expected,
     i++;
   }
   i = naive(i + 1, p);
+  kmp_iter_free(&iter);
   return i == NULL;
 }
 
