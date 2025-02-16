@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 static void search_empty_x(void) {
   const char *x = "";
@@ -23,21 +24,30 @@ static void search_empty_p(void) {
   }
 }
 
+static bool compare_with_exected(const char *x, const char *p, int *expected,
+                                 int expected_hits) {
+  const char *i = x;
+  printf("Lort %s and %s\n", x, p);
+  for (int hit = 0; hit < expected_hits; hit++) {
+    i = naive_search(i, p);
+    printf("%s\n", i);
+    if (expected[hit] != i - x) {
+      fprintf(stderr, "Expected %d but got %ld\n", expected[hit], i - x);
+      return false;
+    }
+    i++;
+  }
+  i = naive_search(i + 1, p);
+  return i == NULL;
+}
+
 static void search_01(void) {
   const char *x = "abracadabra";
   const char *p = "abr";
 
-  cstr_vec(int) expected = cstr_new_vec(int, 2);
-  cstr_vec_append(expected, 0);
-  cstr_vec_append(expected, 7);
-
-  cstr_vec(int) result = cstr_new_vec(int, 1);
-
-  for (const char *i = naive_search(x, p); i; i = naive_search(i + 1, p)) {
-    cstr_vec_append(result, i - x);
-  }
-
-  if (!cstr_vec_eq(expected, result)) {
+  int expected[] = {0, 7};
+  int res = compare_with_exected(x, p, expected, 2);
+  if (!res) {
     fprintf(stderr, "search_01 failed\n");
     exit(1);
   }
@@ -47,15 +57,9 @@ static void search_02(void) {
   const char *x = "abracadabra";
   const char *p = "cad";
 
-  cstr_vec(int) expected = cstr_new_vec(int, 1);
-  cstr_vec_append(expected, 5);
-
-  cstr_vec(int) result = cstr_new_vec(int, 1);
-  for (const char *i = naive_search(x, p); i; i = naive_search(i + 1, p)) {
-    cstr_vec_append(result, i - x);
-  }
-
-  if (!cstr_vec_eq(expected, result)) {
+  int expected[] = {4};
+  int res = compare_with_exected(x, p, expected, 1);
+  if (!res) {
     fprintf(stderr, "search_02 failed\n");
     exit(1);
   }
@@ -65,15 +69,9 @@ static void search_03(void) {
   const char *x = "abracadabra";
   const char *p = "dab";
 
-  cstr_vec(int) expected = cstr_new_vec(int, 1);
-  cstr_vec_append(expected, 6);
-
-  cstr_vec(int) result = cstr_new_vec(int, 1);
-  for (const char *i = naive_search(x, p); i; i = naive_search(i + 1, p)) {
-    cstr_vec_append(result, i - x);
-  }
-
-  if (!cstr_vec_eq(expected, result)) {
+  int expected[] = {6};
+  int res = compare_with_exected(x, p, expected, 1);
+  if (!res) {
     fprintf(stderr, "search_03 failed\n");
     exit(1);
   }

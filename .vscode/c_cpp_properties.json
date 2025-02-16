@@ -4,10 +4,13 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/src",
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include"
             ],
             "defines": [],
-            "macFrameworkPath": [],
+            "macFrameworkPath": [
+                "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+            ],
             "compilerPath": "/usr/bin/clang",
             "cStandard": "c23",
             "intelliSenseMode": "macos-clang-x64"

@@ -5,6 +5,8 @@ file(GLOB SOURCES ./*.h ./*.c)
 target_sources(${PROJECT_NAME}
     PRIVATE 
         ${SOURCES}
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/cstr.h
 )
 # FIXME: make this portable (but right now, the variable I used to switch on
 # doesn't seem to be set, so that didn't work).
